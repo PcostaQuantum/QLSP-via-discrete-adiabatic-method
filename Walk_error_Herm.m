@@ -1,4 +1,4 @@
-function [Aproxs,steps]=Walk_error_Herm(T,A,V,n)
+function [Aproxs]=Walk_error_Herm(T,A,v,n)
 
 
 Bl_A=Bloc_Enc(A);
@@ -17,7 +17,7 @@ borb10=kron(ket1,ket0');
 
 Had_sys = kron(kron(kron(kron(kron(Id,Id),Had),Id),Id),eye(2^n));
 X_syst =  kron(kron(kron(kron(kron(Id,Id),Id),X),Id),eye(2^n));
-Ub_syst = kron(kron(kron(kron(kron(Id,Id),Id),Id),Id),UPrep_b(V,n));
+Ub_syst = kron(kron(kron(kron(kron(Id,Id),Id),Id),Id),UPrep_b(v));
 
 
 
@@ -37,12 +37,12 @@ Prj=kron(kron(kron(kron(kron(Id,ket0),ket0),Id),ket0),eye(2^n))';
 
 Ref= 2*kron(kron(kron(kron(kron(Id,Proj0),Proj0),Id),Proj0),eye(2^n)) - eye(2^(n+5));
 
-b=UPrep_b(V,n)*binquant(0,n);
+b=UPrep_b(v)*binquant(0,n);
 x_exact = A\b;  
 x_exact_n = x_exact/norm(x_exact);
 x_exact_n2=kron(kron([0;1],[1;0]),x_exact_n);
 
-In=kron(kron(kron(kron(kron(ket0,ket0),ket0),ket0),ket0),UPrep_b(V,n)*binquant(0,n));
+In=kron(kron(kron(kron(kron(ket0,ket0),ket0),ket0),ket0),UPrep_b(v)*binquant(0,n));
 for k=1:T
    Rot_Sc=Rot_sched(cond(A),1.4,(k)/j);
    C_sched=kron(kron(kron(kron(kron(Id,Rot_Sc),Id),Proj0),Id),eye(2^n)) + kron(kron(kron(kron(kron(Id,Id),Id),Proj1),Id),eye(2^n));
@@ -61,7 +61,6 @@ for k=1:T
   w=Prj*In;
 
 Aproxs=norm(x_exact_n2-w/norm(w));
-steps=norm(w);
 
 end
 
