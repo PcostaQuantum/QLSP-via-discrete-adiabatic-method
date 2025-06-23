@@ -1,7 +1,6 @@
 function [ket]=binquant(v,n)
 
-%This function converts an integer number into a quantum bitstring
-%representation of that
+
 b=int2bit(v,n);
 
 ket0=[1;0];
